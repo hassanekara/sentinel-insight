@@ -1,13 +1,15 @@
-import { Users, ShieldCheck, AlertTriangle, ShieldAlert } from "lucide-react";
+import { Users, ShieldCheck, AlertTriangle, ShieldAlert, Activity, Search } from "lucide-react";
 
 interface OverviewCardsProps {
   total: number;
   normal: number;
   medium: number;
   high: number;
+  suspicious: number;
+  activeToday: number;
 }
 
-const OverviewCards = ({ total, normal, medium, high }: OverviewCardsProps) => {
+const OverviewCards = ({ total, activeToday, suspicious, high }: OverviewCardsProps) => {
   const cards = [
     {
       label: "Total Users Monitored",
@@ -17,15 +19,15 @@ const OverviewCards = ({ total, normal, medium, high }: OverviewCardsProps) => {
       bgClass: "bg-primary/10",
     },
     {
-      label: "Normal Users",
-      value: normal,
-      icon: ShieldCheck,
+      label: "Active Users Today",
+      value: activeToday,
+      icon: Activity,
       colorClass: "text-risk-low",
       bgClass: "bg-risk-low/10",
     },
     {
-      label: "Medium Risk Users",
-      value: medium,
+      label: "Suspicious Activities",
+      value: suspicious,
       icon: AlertTriangle,
       colorClass: "text-risk-medium",
       bgClass: "bg-risk-medium/10",
