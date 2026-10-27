@@ -1,73 +1,52 @@
-# Welcome to your Lovable project
+# Sentinel Insight — User Risk Monitoring Dashboard (UEBA prototype)
 
-## Project info
+A SOC-style dashboard prototype for **insider-threat and user-behaviour monitoring (UEBA)**. It shows how an analyst can triage users by risk score, see why an account was flagged, and drill into its login and device history.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+> Prototype with simulated data — no real users or logs are included.
 
-## How can I edit this code?
+## What it shows
 
-There are several ways of editing your application.
+| View | Purpose |
+|---|---|
+| **Overview cards** | Number of monitored users, suspicious and high-risk accounts at a glance |
+| **Risk chart** | Distribution of risk scores across the population |
+| **User risk table** | Risk score (0–100), status *Normal / Suspicious / High Risk*, device, VPN state, last activity |
+| **User detail panel** | Behaviour summary, raised flags, login history and device history for one user |
 
-**Use Lovable**
+## Detection scenarios modelled
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Each simulated user carries the indicators a SOC analyst would look for:
 
-Changes made via Lovable will be committed automatically to this repo.
+- Login **outside working hours**
+- Login from a **new / unknown device**
+- Connection through a **VPN**
+- **Large data download** (e.g. 2.3 GB from a database the user does not usually access)
+- Access to a **department database unrelated to the user's role**
 
-**Use your preferred IDE**
+Risk bands: `0–30` normal · `31–70` suspicious · `71–100` high risk.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Why I built it
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+My SOC lab (Wazuh + Suricata) produces alerts per host. This project explores the other side of detection: scoring **identities** instead of machines, and presenting the result so an analyst can decide in a few seconds which account to investigate first.
 
-Follow these steps:
+## Run locally
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+git clone https://github.com/hassanekara/sentinel-insight.git
+cd sentinel-insight
+npm install
+npm run dev      # http://localhost:8080
 ```
 
-**Edit a file directly in GitHub**
+## Stack
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+React · TypeScript · Vite · Tailwind CSS · shadcn/ui · Recharts — UI scaffolded with Lovable, scenarios and risk logic designed by me.
 
-**Use GitHub Codespaces**
+## Next steps
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- [ ] Feed the dashboard with real alerts exported from Wazuh (JSON)
+- [ ] Map each flag to a MITRE ATT&CK technique
+- [ ] Add an analyst action log (acknowledge / escalate / close)
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+Author: **Nouradine Hassane Kara** — cybersecurity student (ESAIP), audit · vulnerability management · SOC
